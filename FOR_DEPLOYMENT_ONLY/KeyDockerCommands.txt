@@ -1,0 +1,19 @@
+-- RUN THESE COMMANDS ONE AFTER ANOTHER IN A DEPLOYMENT HOST ENVIRONEMENT. 
+-- FIRST ENSURE THAT DOCKER IS INSTALLED e.g. docker ps or docker --help
+-- Build the docker container
+docker build --no-cache --progress=plain -t petal-width-prediction .
+--- IF IT IS SUCCESSFULLY BUILT ENSURE THAT WE HAVE NO CONTAINER WITH THE SAME NAME 
+
+docker rm CONTAINER petal-width-predictor
+
+-- NOW RUN THE CONTAINER 
+docker run -it --name petal-width-predictor  -p 0.0.0.0:8090:8090 petal-width-prediction:latest 
+
+-- ENSURE THAT THE HOST SYSTEM HAS CURL BEFORE YOU RUN THIS PREDICTION TEST
+curl -X POST   -H "accept: application/json" -H "Content-Type: application/json" -d "{\"petal_length\":3.0  }" http://127.0.0.1:8090/predict
+
+-- TO sh into the container
+docker exec -it petal-width-predictor sh
+
+-- TO stop the container 
+docker stop petal-width-predictor
