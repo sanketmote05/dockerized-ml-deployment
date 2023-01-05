@@ -69,27 +69,3 @@ ENV CDSW_APP_PORT="8090"
 RUN sh cdsw-build.sh
 
 ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8090", "app:app"]
-
-# Set Runtime label and environment variables metadata
-#ML_RUNTIME_EDITOR and ML_RUNTIME_METADATA_VERSION must not be changed.
-ENV ML_RUNTIME_EDITOR="PBJ Workbench" \
-    ML_RUNTIME_METADATA_VERSION="2" \
-    ML_RUNTIME_KERNEL="Python 3.10" \
-    ML_RUNTIME_EDITION="Custom Edition" \
-    ML_RUNTIME_SHORT_VERSION="1.0" \
-    ML_RUNTIME_MAINTENANCE_VERSION="1" \
-    ML_RUNTIME_JUPYTER_KERNEL_GATEWAY_CMD="/usr/local/bin/jupyter kernelgateway" \
-    ML_RUNTIME_JUPYTER_KERNEL_NAME="python3" \
-    ML_RUNTIME_DESCRIPTION="My first Custom PBJ Runtime"
-          
-
-ENV ML_RUNTIME_FULL_VERSION="$ML_RUNTIME_SHORT_VERSION.$ML_RUNTIME_MAINTENANCE_VERSION" 
-
-LABEL com.cloudera.ml.runtime.editor=$ML_RUNTIME_EDITOR \
-	    com.cloudera.ml.runtime.kernel=$ML_RUNTIME_KERNEL \
-	    com.cloudera.ml.runtime.edition=$ML_RUNTIME_EDITION \
-	    com.cloudera.ml.runtime.full-version=$ML_RUNTIME_FULL_VERSION \
-      com.cloudera.ml.runtime.short-version=$ML_RUNTIME_SHORT_VERSION \
-      com.cloudera.ml.runtime.maintenance-version=$ML_RUNTIME_MAINTENANCE_VERSION \
-      com.cloudera.ml.runtime.description=$ML_RUNTIME_DESCRIPTION \
-      com.cloudera.ml.runtime.runtime-metadata-version=$ML_RUNTIME_METADATA_VERSION
