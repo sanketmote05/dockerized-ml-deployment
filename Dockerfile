@@ -64,6 +64,7 @@ COPY ["app.py", "cdsw-build.sh", "model.pkl", "predict.py", "requirements.txt", 
 EXPOSE 8090
 
 ENV PATH="$PATH:/home/cdsw/.local/bin"
+ENV APP_IP_ADDRESS="0.0.0.0"
 ENV CDSW_APP_PORT="8090"
 RUN sh cdsw-build.sh
 
