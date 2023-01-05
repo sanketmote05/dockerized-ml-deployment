@@ -1,9 +1,9 @@
 # How to call the Predict Functon below to make online predictions from Terminal / Command line
 """
-Step 1 :Run the app.py  through the command on terminal 
+Step 1 :Run the app.py  through the command on CML terminal 
 gunicorn --bind 127.0.0.1:8090 app:app
 
-Step 2: Open another terminalk and run  
+Step 2: Open another terminal and run  
 curl -X POST   -H "accept: application/json" -H "Content-Type: application/json" -d "{\"petal_length\":2.0  }" http://127.0.0.1:8090/predict
 
 Expected Output is
@@ -48,5 +48,10 @@ def predict():
   
     
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=int(os.environ["CDSW_APP_PORT"]))
+    host_ip = os.environ["APP_IP_ADDRESS"]
+    # In CML the 0.0.0.0 address is already taken but in docker containers we need this address below
+    # so make sure that APP_IP_ADDRESS environment variable is set in CML project
+    if host_ip is None :
+      host_ip = "0.0.0.0" 
+    app.run(host=host_ip, port=int(os.environ["CDSW_APP_PORT"]))
     
